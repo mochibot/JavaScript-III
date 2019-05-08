@@ -139,3 +139,75 @@ CharacterStats.prototype.takeDamage = function () {
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  function Villain(villainAttri) {
+    Humanoid.call(this, villainAttri);
+    this.destruction = function () {
+      return this.healthPoints <= 0;
+    }
+  }
+
+  Villain.prototype = Object.create(Humanoid.prototype);
+
+  Villain.prototype.attack = function (char) {
+    char.healthPoints -=3; 
+    return `${char.name}'s health points decreased to ${char.healthPoints}`; 
+  }
+
+  
+  function Hero(heroAttri) {
+    Humanoid.call(this, heroAttri);
+    this.destruction = function () {
+      return this.healthPoints <= 0;
+    }
+  }
+
+  Hero.prototype = Object.create(Humanoid.prototype);
+
+  Hero.prototype.counterattack = function (char) {
+    char.healthPoints -= 5; 
+    return `${char.name}'s health points decreased to ${char.healthPoints}`; 
+  }
+
+  const badGuy = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Bad Guy',
+    team: 'Thanos',
+    weapons: [
+      'Stones',
+    ],
+    language: 'English',
+  });
+
+  const goodGuy = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Good Guy',
+    team: 'Avengers',
+    weapons: [
+      'Superpower',
+    ],
+    language: 'English',
+  });
+
+  console.log(badGuy.name);
+  console.log(goodGuy.name);
+  console.log(badGuy.healthPoints);
+  console.log(goodGuy.healthPoints);
+  console.log(badGuy.attack(goodGuy));
+  console.log(goodGuy.counterattack(badGuy));
+  console.log(badGuy.attack(goodGuy));
+  console.log(goodGuy.counterattack(badGuy));
+  console.log(badGuy.destruction());
+  console.log(goodGuy.destruction());
