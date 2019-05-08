@@ -142,14 +142,13 @@ CharacterStats.prototype.takeDamage = function () {
 
   function Villain(villainAttri) {
     Humanoid.call(this, villainAttri);
-
   }
 
   Villain.prototype = Object.create(Humanoid.prototype);
 
   Villain.prototype.attack = function (char) {
     char.healthPoints -=3; 
-    return `${char.name}'s health points decreased to ${char.healthPoints}`; 
+    return `${char.name} was attacked. Health points decreased to ${char.healthPoints}`; 
   }
 
   Villain.prototype.isDestoryed = function () {
@@ -168,7 +167,7 @@ CharacterStats.prototype.takeDamage = function () {
 
   Hero.prototype.counterattack = function (char) {
     char.healthPoints -= 5; 
-    return `${char.name}'s health points decreased to ${char.healthPoints}`; 
+    return `${char.name} was attacked. Health points decreased to ${char.healthPoints}`; 
   }
 
   Hero.prototype.isDestoryed = function () {
@@ -182,11 +181,12 @@ CharacterStats.prototype.takeDamage = function () {
   const badGuy = new Villain({
     createdAt: new Date(),
     dimensions: {
-      length: 2,
-      width: 1,
-      height: 1,
+      length: 10,
+      width: 10,
+      height: 10,
+      //badguy is a cube :p
     },
-    healthPoints: 10,
+    healthPoints: 20,
     name: 'Bad Guy',
     team: 'Thanos',
     weapons: [
@@ -199,10 +199,10 @@ CharacterStats.prototype.takeDamage = function () {
     createdAt: new Date(),
     dimensions: {
       length: 2,
-      width: 1,
-      height: 1,
+      width: 2,
+      height: 10,
     },
-    healthPoints: 10,
+    healthPoints: 20,
     name: 'Good Guy',
     team: 'Avengers',
     weapons: [
@@ -215,6 +215,12 @@ CharacterStats.prototype.takeDamage = function () {
   console.log(goodGuy.name);
   console.log(badGuy.healthPoints);
   console.log(goodGuy.healthPoints);
+  console.log(badGuy.attack(goodGuy));
+  console.log(goodGuy.counterattack(badGuy));
+  console.log(badGuy.attack(goodGuy));
+  console.log(goodGuy.counterattack(badGuy));
+  console.log(badGuy.isDestoryed());
+  console.log(goodGuy.isDestoryed());
   console.log(badGuy.attack(goodGuy));
   console.log(goodGuy.counterattack(badGuy));
   console.log(badGuy.attack(goodGuy));
