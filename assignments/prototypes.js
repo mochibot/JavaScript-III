@@ -142,9 +142,7 @@ CharacterStats.prototype.takeDamage = function () {
 
   function Villain(villainAttri) {
     Humanoid.call(this, villainAttri);
-    this.destruction = function () {
-      return this.healthPoints <= 0;
-    }
+
   }
 
   Villain.prototype = Object.create(Humanoid.prototype);
@@ -154,12 +152,16 @@ CharacterStats.prototype.takeDamage = function () {
     return `${char.name}'s health points decreased to ${char.healthPoints}`; 
   }
 
+  Villain.prototype.isDestoryed = function () {
+      if (this.healthPoints <= 0) {
+        return this.destroy();
+      } else {
+        return `${this.name} is still in the game`
+      };
+  }
   
   function Hero(heroAttri) {
     Humanoid.call(this, heroAttri);
-    this.destruction = function () {
-      return this.healthPoints <= 0;
-    }
   }
 
   Hero.prototype = Object.create(Humanoid.prototype);
@@ -168,6 +170,14 @@ CharacterStats.prototype.takeDamage = function () {
     char.healthPoints -= 5; 
     return `${char.name}'s health points decreased to ${char.healthPoints}`; 
   }
+
+  Hero.prototype.isDestoryed = function () {
+    if (this.healthPoints <= 0) {
+      return this.destroy();
+    } else {
+      return `${this.name} is still in the game`
+    };
+}
 
   const badGuy = new Villain({
     createdAt: new Date(),
@@ -209,5 +219,5 @@ CharacterStats.prototype.takeDamage = function () {
   console.log(goodGuy.counterattack(badGuy));
   console.log(badGuy.attack(goodGuy));
   console.log(goodGuy.counterattack(badGuy));
-  console.log(badGuy.destruction());
-  console.log(goodGuy.destruction());
+  console.log(badGuy.isDestoryed());
+  console.log(goodGuy.isDestoryed());
